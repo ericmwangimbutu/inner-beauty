@@ -33,7 +33,9 @@ import {
   ChevronLeft,
   Palette,
   Package,
-  PenTool
+  PenTool,
+  Search,
+  ShoppingCart
 } from 'lucide-react';
 
 // Backend API endpoint (also used for Gemini proxying)
@@ -45,44 +47,170 @@ const defaultModel =
 // Updated Services Data for Inner Beauty Salon
 const servicesData = {
   "Braids & Cornrows": [
-    { name: "Knotless Braids", price: "$120+", duration: "180 min" },
-    { name: "Standard Hair Braids", price: "$80+", duration: "120 min" },
-    { name: "Ghanaian Braids", price: "$90+", duration: "150 min" },
-    { name: "Cornrows (All Styles)", price: "$60+", duration: "60 min" },
+    { name: "Knotless Braids", price: "Ksh 1500+", duration: "180 min" },
+    { name: "Standard Hair Braids", price: "Ksh 3000+", duration: "120 min" },
+    { name: "Ghanaian Braids", price: "Ksh 2000+", duration: "150 min" },
+    { name: "Cornrows (All Styles)", price: "Ksh 2000+", duration: "60 min" },
+    { name: "Box Braids", price: "Ksh 4000+", duration: "240 min" },
+    { name: "Feed-in Braids", price: "Ksh 2500+", duration: "180 min" },
+    { name: "Crochet Braids", price: "Ksh 3500+", duration: "180 min" },
+    { name: "Faux Locs", price: "Ksh 5000+", duration: "300 min" },
+    { name: "Braided Updos", price: "Ksh 3000+", duration: "90 min" },
+    { name: "Braided Ponytails", price: "Ksh 2500+", duration: "60 min" },
+    { name: "Braided Crowns", price: "Ksh 3500+", duration: "120 min" },
+    { name: "Braided Wigs Installation", price: "Ksh 6000+", duration: "180 min" },
+    { name: "Braided Extensions Removal", price: "Ksh 1000+", duration: "60 min" },
+    { name: "Braided Hair Touch-Up", price: "Ksh 1500+", duration: "90 min" },
+    { name: "Braided Hair Consultation", price: "Ksh 500", duration: "30 min" },
+    { name: "Braided Hair Maintenance", price: "Ksh 2000+", duration: "60 min" },
+    { name: "Braided Hair Styling", price: "Ksh 2500+", duration: "60 min" },
+    { name: "Braided Hair Treatments", price: "Ksh 1500+", duration: "45 min" },
+    { name: "Braided Hair Accessories", price: "Ksh 300+", duration: "15 min" },
+    { name: "Braided Hair Color", price: "Ksh 4000+", duration: "120 min" },
+    { name: "Braided Hair Highlights", price: "Ksh 4500+", duration: "150 min" },
+    { name: "Braided Hair Extensions", price: "Ksh 5000+", duration: "180 min" },
+    { name: "Braided Hair Removal", price: "Ksh 1200+", duration: "60 min" },
+    { name: "Braided Hair Refresh", price: "Ksh 2000+", duration: "90 min" },
+    { name: "Braided Hair Deep Conditioning", price: "Ksh 1800+", duration: "60 min" },
+    { name: "Braided Hair Scalp Treatment", price: "Ksh 1500+", duration: "45 min" },
+    { name: "Braided Hair Detangling", price: "Ksh 1000+", duration: "30 min" },
+    { name: "Braided Hair Detox", price: "Ksh 2000+", duration: "60 min" },
+    { name: "Braided Hair Protein Treatment", price: "Ksh 1800+", duration: "45 min" },
+    { name: "Braided Hair Moisture Treatment", price: "Ksh 1600+", duration: "45 min" },
+    { name: "Braided Hair Shine Treatment", price: "Ksh 1500+", duration: "30 min" },
+    { name: "Braided Hair Frizz Control", price: "Ksh 1200+", duration: "30 min" },
+    { name: "Braided Hair Edge Control", price: "Ksh 800+", duration: "15 min" },
   ],
+
   "Locs & Natural": [
-    { name: "Sisterlocks Restoration & Retie", price: "$150+", duration: "240 min" },
-    { name: "Dreadlocks Retie", price: "$85+", duration: "90 min" },
-    { name: "Twistouts", price: "$65", duration: "60 min" },
+    { name: "Sisterlocks Restoration & Retie", price: "Ksh 10000+", duration: "240 min" },
+    { name: "Dreadlocks Retie", price: "Ksh 3000+", duration: "90 min" },
+    { name: "Twistouts", price: "Ksh 4000+", duration: "60 min" },
+    { name: "Natural Hair Styling", price: "Ksh 2500+", duration: "60 min" },
+    { name: "Loc Installation", price: "Ksh 8000+", duration: "180 min" },
+    { name: "Sisterlocks Installation", price: "Ksh 20000+", duration: "300 min" },
+    { name: "Dreadlocks Installation", price: "Ksh 15000+", duration: "240 min" },
+    ],
+  
+  "Hair Styling": [
+    { name: "Wash & Blowout", price: "Ksh 1500", duration: "60 min" },
+    { name: "Updo Styles", price: "Ksh 3000+", duration: "90 min" },
+    { name: "Protective Styles", price: "Ksh 4000+", duration: "120 min" },
+    { name: "Hair Treatments", price: "Ksh 2000+", duration: "60 min" },
+    { name: "Edge Styling", price: "Ksh 800", duration: "15 min" },
+    { name: "Scalp Massage", price: "Ksh 1000", duration: "30 min" },
+    { name: "Hot Oil Treatment", price: "Ksh 1500", duration: "45 min" },
+    { name: "Deep Conditioning", price: "Ksh 1200", duration: "30 min" },
+    { name: "Detangling Session", price: "Ksh 1000", duration: "30 min" },
+    { name: "Blow Dry & Style", price: "Ksh 1800", duration: "60 min" },
+    { name: "Flat Ironing", price: "Ksh 2000", duration: "60 min" },
+    { name: "Curling/Waving", price: "Ksh 2000", duration: "60 min" },
+    { name: "Hair Trimming", price: "Ksh 800", duration: "20 min" },
+    { name: "Scalp Treatment", price: "Ksh 1500", duration: "45 min" },
+    { name: "Hair Detox", price: "Ksh 2000", duration: "60 min" },
+    { name: "Protein Treatment", price: "Ksh 1800", duration: "45 min" },
+    { name: "Moisture Treatment", price: "Ksh 1600", duration: "45 min" },
   ],
+
+
+  "Makeup Services": [
+    { name: "Daytime Makeup", price: "Ksh 1500", duration: "45 min" },
+    { name: "Bridal Makeup", price: "Ksh 5000", duration: "120 min" },
+    { name: "Special Occasion Makeup", price: "Ksh 3000", duration: "60 min" },
+    { name: "Makeup Touch-Up", price: "Ksh 1000", duration: "30 min" },
+    { name: "Makeup Lessons", price: "Ksh 4000", duration: "90 min" },
+    { name: "Airbrush Makeup", price: "Ksh 3500", duration: "60 min" },
+    { name: "Makeup Removal", price: "Ksh 800", duration: "15 min" },
+    { name: "Eyebrow Shaping & Tinting", price: "Ksh 1200", duration: "30 min" },
+    { name: "Eyelash Extensions", price: "Ksh 4000", duration: "90 min" },
+    { name: "Eyelash Lift & Tint", price: "Ksh 2500", duration: "60 min" },
+    { name: "Makeup for Photoshoots", price: "Ksh 4500", duration: "90 min" },
+    { name: "Makeup for Events", price: "Ksh 3000", duration: "60 min" },
+    { name: "Makeup for TV/Film", price: "Ksh 6000", duration: "120 min" },
+    { name: "Makeup for Fashion Shows", price: "Ksh 5500", duration: "90 min" },
+    { name: "Makeup for Graduations", price: "Ksh 2500", duration: "45 min" },
+    { name: "Makeup for Parties", price: "Ksh 2000", duration: "45 min" },
+    { name: "Makeup for Corporate Events", price: "Ksh 3000", duration: "60 min" },
+  
+  ],
+
   "Nails & Care": [
-    { name: "Classic Manicure", price: "$35", duration: "45 min" },
-    { name: "Luxury Pedicure", price: "$55", duration: "60 min" },
-    { name: "Gel Application", price: "$45", duration: "45 min" },
-    { name: "Nail Polish Change", price: "$20", duration: "30 min" },
+    { name: "Classic Manicure", price: "Ksh 500", duration: "45 min" },
+    { name: "Luxury Pedicure", price: "Ksh 500", duration: "60 min" },
+    { name: "Gel Application", price: "Ksh 1000", duration: "45 min" },
+    { name: "Nail Polish Change", price: "Ksh 500", duration: "30 min" },
+    { name: "Nail Art Design", price: "Ksh 1500", duration: "60 min" },
+    { name: "Acrylic Nails", price: "Ksh 2000", duration: "90 min" },
+    { name: "Dip Powder Nails", price: "Ksh 1800", duration: "75 min" },
+    { name: "Nail Repair", price: "Ksh 300", duration: "15 min" },
+    { name: "Paraffin Wax Treatment", price: "Ksh 800", duration: "30 min" },
+    { name: "Cuticle Care", price: "Ksh 400", duration: "20 min" },
+    { name: "Nail Strengthening Treatment", price: "Ksh 700", duration: "30 min" },
   ],
+
+  "Waxing & Threading": [
+    { name: "Eyebrow Threading", price: "Ksh 500", duration: "15 min" },
+    { name: "Full Face Waxing", price: "Ksh 1500", duration: "30 min" },
+    { name: "Leg Waxing", price: "Ksh 2000", duration: "45 min" },
+    { name: "Arm Waxing", price: "Ksh 1200", duration: "30 min" },
+    { name: "Underarm Waxing", price: "Ksh 800", duration: "20 min" },
+    { name: "Bikini Waxing", price: "Ksh 1800", duration: "30 min" },
+    { name: "Full Body Waxing", price: "Ksh 5000", duration: "120 min" },
+    { name: "Lip & Chin Waxing", price: "Ksh 600", duration: "15 min" },
+  ],
+
   "Face & Body": [
-    { name: "Full Facial", price: "$85", duration: "75 min" },
-    { name: "Deep Scrubbing", price: "$60", duration: "45 min" },
-    { name: "Evening Makeup", price: "$90", duration: "60 min" },
+    { name: "Full Facial", price: "Ksh 1000", duration: "75 min" },
+    { name: "Deep Scrubbing", price: "Ksh 1500", duration: "45 min" },
+    { name: "Evening Makeup", price: "Ksh 2000", duration: "60 min" },
+    { name: "Body Scrub", price: "Ksh 2500", duration: "60 min" },
+    { name: "Body Wrap", price: "Ksh 3000", duration: "90 min" },
+    { name: "Anti-Aging Facial", price: "Ksh 2000", duration: "60 min" },
+    { name: "Acne Treatment Facial", price: "Ksh 1800", duration: "60 min" },
+    { name: "Hydrating Facial", price: "Ksh 1500", duration: "45 min" },
+    { name: "Brightening Facial", price: "Ksh 1700", duration: "45 min" },
+    { name: "Microdermabrasion", price: "Ksh 2500", duration: "60 min" },
+    { name: "Chemical Peel", price: "Ksh 3000", duration: "60 min" },
+    { name: "Back Facial", price: "Ksh 2000", duration: "60 min" },
+    { name: "Eye Treatment", price: "Ksh 1200", duration: "30 min" },
+    { name: "Lip Treatment", price: "Ksh 800", duration: "15 min" },
+    { name: "Neck & Décolleté Treatment", price: "Ksh 1500", duration: "30 min" },
+    { name: "Hand & Foot Treatment", price: "Ksh 1000", duration: "30 min" },
   ],
+
   "Weddings & Remote": [
-    { name: "Bridal Package (Hair+Makeup)", price: "$350", duration: "240 min" },
+    { name: "Bridal Package (Hair+Makeup)", price: "Ksh 15000", duration: "240 min" },
     { name: "Wedding Party Group", price: "Consult", duration: "Var" },
-    { name: "Remote Home Service", price: "+$40 Fee", duration: "Travel" },
+    { name: "Remote Home Service", price: "+Ksh 1000 Fee", duration: "Travel" },
+    { name: "Destination Wedding", price: "Consult", duration: "Var" },
+    { name: "Bridal Hair Trial", price: "Ksh 5000", duration: "120 min" },
+    { name: "Bridal Makeup Trial", price: "Ksh 3000", duration: "60 min" },
+    { name: "Groom's Grooming Package", price: "Ksh 8000", duration: "120 min" },
+    { name: "Bridesmaid Package", price: "Ksh 6000", duration: "90 min" },
+    {name: "Mother of the Bride/Groom Package", price: "Ksh 7000", duration: "90 min" },
   ]
 };
 
 const products = [
-  { name: "Inner Beauty Velvet Lipstick", price: "$28", img: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&w=400&q=80" },
-  { name: "Hydrating Facial Mist", price: "$35", img: "https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?auto=format&fit=crop&w=400&q=80" },
-  { name: "Loc Maintenance Oil", price: "$25", img: "https://images.unsplash.com/photo-1608248597279-f99d160bfbc8?auto=format&fit=crop&w=400&q=80" },
+  { name: "Inner Beauty Velvet Lipstick", price: "Ksh 3000", img: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&w=400&q=80", description: "A luxurious, long-lasting velvet lipstick that provides a bold, matte finish." },
+  { name: "Hydrating Facial Mist", price: "Ksh 2350", img: "https://images.unsplash.com/photo-1616683693504-3ea7e9ad6fec?auto=format&fit=crop&w=400&q=80", description: "A refreshing facial mist that hydrates and revitalizes your skin throughout the day." },
+  { name: "Loc Maintenance Oil", price: "Ksh 1000", img: "https://images.unsplash.com/photo-1608248597279-f99d160bfbc8?auto=format&fit=crop&w=400&q=80", description: "A nourishing oil blend that keeps your locs healthy, shiny, and moisturized without buildup." },
+  { name: "Nourishing Hair Butter", price: "Ksh 1500", img: "https://images.unsplash.com/photo-1590080877777-4b2f3f3b8e2d?auto=format&fit=crop&w=400&q=80", description: "A rich, creamy hair butter that deeply conditions, strengthens, and promotes healthy hair growth." },
+  { name: "Smoothing Edge Control", price: "Ksh 1200", img: "https://images.unsplash.com/photo-1612832021044-5f4e1c3b6f3e?auto=format&fit=crop&w=400&q=80", description: "A non-flaky, long-lasting edge control that provides a smooth, sleek hold for all hair types." },
+  { name: "Luxury Nail Kit", price: "Ksh 3500", img: "https://images.unsplash.com/photo-1587614382346-4ec2b3d3f1b4?auto=format&fit=crop&w=400&q=80", description: "A complete nail care kit for a perfect, salon-quality manicure and pedicure at home." },
+  { name: "Makeup Brush Set", price: "Ksh 4000", img: "https://images.unsplash.com/photo-1542831371-d531d36971e6?auto=format&fit=crop&w=400&q=80", description: "A set of professional-grade makeup brushes for a flawless and seamless application every time." },
+  { name: "Facial Cleansing Balm", price: "Ksh 1800", img: "https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=400&q=80", description: "A gentle yet effective cleansing balm that melts away makeup, sunscreen, and impurities." },
+  { name: "Inner Beauty Gift Card", price: "Ksh 5000", img: "https://images.unsplash.com/photo-1606813909353-1c4a3f4e5b6e?auto=format&fit=crop&w=400&q=80", description: "The perfect gift for any beauty lover. Can be redeemed for any of our services or products." },
+  { name: "Sisterlocks Care Kit", price: "Ksh 2500", img: "https://images.unsplash.com/photo-1612831455543-8f4e1c3b6f3e?auto=format&fit=crop&w=400&q=80", description: "Everything you need to maintain your Sisterlocks and keep them looking their absolute best." },
+  { name: "Hydrating Body Lotion", price: "Ksh 2200", img: "https://images.unsplash.com/photo-1590080877777-4b2f3f3b8e2d?auto=format&fit=crop&w=400&q=80", description: "A lightweight, fast-absorbing body lotion that provides long-lasting hydration for smooth skin." },
+  { name: "Makeup Setting Spray", price: "Ksh 1500", img: "https://images.unsplash.com/photo-1607746882042-944635dfe10e?auto=format&fit=crop&w=400&q=80", description: "A fine mist setting spray that locks in your makeup for a fresh, just-applied look that lasts all day." },
+  { name: "Nail Strengthening Serum", price: "Ksh 1300", img: "https://images.unsplash.com/photo-1587614382346-4ec2b3d3f1b4?auto=format&fit=crop&w=400&q=80", description: "A powerful serum that strengthens and protects your nails from chipping, splitting, and breaking." },
 ];
 
 const testimonials = [
-  { id: 1, name: "Amanda Richards", text: "They saved my Sisterlocks! The restoration service was incredible.", rating: 5 },
-  { id: 2, name: "Michelle Wu", text: "Best Knotless braids in the city. So neat and painless.", rating: 5 },
-  { id: 3, name: "Emily Rostova", text: "The remote service for my wedding was a lifesaver. Highly recommend.", rating: 5 },
+  { id: 1, name: "Judy W. Macharia", text: "They saved my Sisterlocks! The restoration service was incredible.", rating: 5 },
+  { id: 2, name: "Lucy W. Macharia", text: "Best Knotless braids in the city. So neat and painless.", rating: 5 },
+  { id: 3, name: "Esther Macharia", text: "The remote service for my wedding was a lifesaver. Highly recommend.", rating: 5 },
 ];
 
 // Instagram Mock Data
@@ -164,11 +292,35 @@ export default function App() {
   const [giftResponse, setGiftResponse] = useState('');
   const [isGiftLoading, setIsGiftLoading] = useState(false);
 
+  const [serviceSearchQuery, setServiceSearchQuery] = useState('');
+
+  const [productSearchQuery, setProductSearchQuery] = useState('');
+
+  // Product Detail & Cart
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [cartItems, setCartItems] = useState([]);
+
   // Navigation Handler
   const navigate = (page) => {
     setCurrentPage(page);
     setIsMenuOpen(false);
     window.scrollTo(0, 0);
+  };
+
+  // Add to Cart Handler
+  const addToCart = (product) => {
+    setCartItems(prevItems => {
+      const itemInCart = prevItems.find(item => item.name === product.name);
+      if (itemInCart) {
+        return prevItems.map(item =>
+          item.name === product.name ? { ...item, quantity: item.quantity + 1 } : item
+        );
+      } else {
+        return [...prevItems, { ...product, quantity: 1 }];
+      }
+    });
+    // Optional: Give user feedback
+    alert(`${product.name} added to cart!`);
   };
 
   // Handle Booking Submission
@@ -415,8 +567,24 @@ export default function App() {
             >
               Book Now
             </button>
+            <button onClick={() => navigate('cart')} className="relative ml-4 text-gray-600 hover:text-pink-500 transition-colors">
+              <ShoppingCart size={24} />
+              {cartItems.length > 0 && (
+                <span className="absolute -top-2 -right-2 bg-pink-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
+                  {cartItems.reduce((acc, item) => acc + item.quantity, 0)}
+                </span>
+              )}
+            </button>
           </nav>
           <div className="md:hidden flex items-center">
+             <button onClick={() => navigate('cart')} className="relative mr-4 text-gray-600 hover:text-pink-500">
+              <ShoppingCart size={24} />
+              {cartItems.length > 0 && (
+                <span className="absolute -top-2 -right-2 bg-pink-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
+                  {cartItems.reduce((acc, item) => acc + item.quantity, 0)}
+                </span>
+              )}
+            </button>
             <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-gray-500 hover:text-pink-500 transition-colors">
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -426,7 +594,7 @@ export default function App() {
       {isMenuOpen && (
         <div className="md:hidden bg-white/95 backdrop-blur-md border-t border-gray-100 animate-fade-in shadow-lg">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            {['Home', 'Services', 'Products', 'Weddings', 'Contact', 'Booking'].map((item) => (
+            {['Home', 'Services', 'Products', 'Weddings', 'Contact', 'Booking', 'Cart'].map((item) => (
               <button
                 key={item}
                 onClick={() => navigate(item.toLowerCase())}
@@ -455,7 +623,7 @@ export default function App() {
           {/* Left Content */}
           <div className="flex-1 text-center lg:text-left">
             <div className="inline-block bg-pink-100 text-pink-600 px-4 py-2 rounded-full text-xs font-bold mb-6 tracking-widest uppercase border border-pink-200">
-              Now Booking Weddings 2025
+              Now Booking Weddings 2026
             </div>
             <h1 className="text-5xl md:text-7xl font-serif leading-tight mb-6 text-gray-900">
               Reveal Your <br/>
@@ -636,216 +804,394 @@ export default function App() {
     </section>
   );
 
-  const ServicesPage = () => (
-    <div className="py-32 bg-pink-50/30 min-h-screen">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-4xl md:text-5xl font-serif text-center text-gray-900 mb-4">Service Menu</h2>
-        <p className="text-center text-gray-500 mb-16 max-w-2xl mx-auto">
-          From intricate Sisterlocks to rejuvenating Facials, we offer a full spectrum of beauty services.
-        </p>
+  const ServicesPage = () => {
+    const filteredServices = Object.entries(servicesData).reduce((acc, [category, items]) => {
+      const filteredItems = items.filter(service =>
+        service.name.toLowerCase().includes(serviceSearchQuery.toLowerCase())
+      );
+      if (filteredItems.length > 0) {
+        acc[category] = filteredItems;
+      }
+      return acc;
+    }, {});
 
-        {/* AI Tools Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-          {/* Existing: Aftercare Architect */}
-          <div className="bg-white rounded-3xl p-8 shadow-lg border border-pink-100 flex flex-col">
-            <div className="bg-pink-100 w-12 h-12 rounded-xl flex items-center justify-center text-pink-600 mb-4">
-              <ShieldCheck size={24} />
-            </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">Aftercare Architect</h3>
-            <p className="text-gray-600 text-sm mb-4 flex-1">
-              Got fresh braids? Enter your service (e.g., "Sisterlocks Retie") to get a personalized maintenance routine.
-            </p>
-            <div className="space-y-3">
-              <div className="flex gap-2">
-                <input 
-                  type="text"
-                  value={careQuery}
-                  onChange={(e) => setCareQuery(e.target.value)}
-                  placeholder="E.g. Silk Press"
-                  className="flex-1 bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 outline-none text-sm"
-                />
-                <button 
-                  onClick={handleCareAI}
-                  disabled={isCareLoading || !careQuery.trim()}
-                  className="bg-gray-900 text-white px-4 rounded-lg font-bold text-sm hover:bg-black"
-                >
-                  {isCareLoading ? <Loader2 className="animate-spin w-4 h-4" /> : "Plan"}
-                </button>
-              </div>
-              {careResponse && (
-                <div className="bg-gray-50 p-4 rounded-lg text-sm text-gray-700 whitespace-pre-line border border-gray-200 animate-fade-in">
-                  <Sparkles className="w-3 h-3 text-pink-500 inline mr-1"/> {careResponse}
-                </div>
-              )}
-            </div>
+    return (
+      <div className="py-32 bg-pink-50/30 min-h-screen">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-4xl md:text-5xl font-serif text-center text-gray-900 mb-4">Service Menu</h2>
+          <p className="text-center text-gray-500 mb-8 max-w-2xl mx-auto">
+            From intricate Sisterlocks to rejuvenating Facials, we offer a full spectrum of beauty services.
+          </p>
+
+          <div className="relative w-full max-w-lg mx-auto mb-16">
+            <input
+              type="text"
+              placeholder="Search for services like 'Knotless Braids'..."
+              className="w-full px-6 py-4 pr-12 text-gray-700 bg-white border-2 border-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent shadow-sm transition"
+              value={serviceSearchQuery}
+              onChange={(e) => setServiceSearchQuery(e.target.value)}
+            />
+            <Search className="absolute w-6 h-6 text-gray-400 right-5 top-1/2 transform -translate-y-1/2" />
           </div>
 
-          {/* NEW: Smart Braid Planner */}
-          <div className="bg-white rounded-3xl p-8 shadow-lg border border-pink-100 flex flex-col">
-            <div className="bg-purple-100 w-12 h-12 rounded-xl flex items-center justify-center text-purple-600 mb-4">
-              <Clock size={24} />
-            </div>
-            <h3 className="text-xl font-bold text-gray-900 mb-2">Smart Braid Planner</h3>
-            <p className="text-gray-600 text-sm mb-4 flex-1">
-              Planning a long sitting? Enter your hair length/style (e.g., "Waist length boho knotless, 4C hair") for estimates.
-            </p>
-            <div className="space-y-3">
-              <div className="flex gap-2">
-                <input 
-                  type="text"
-                  value={plannerQuery}
-                  onChange={(e) => setPlannerQuery(e.target.value)}
-                  placeholder="Style & Hair Details"
-                  className="flex-1 bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 outline-none text-sm"
-                />
-                <button 
-                  onClick={handlePlannerAI}
-                  disabled={isPlannerLoading || !plannerQuery.trim()}
-                  className="bg-purple-600 text-white px-4 rounded-lg font-bold text-sm hover:bg-purple-700"
-                >
-                  {isPlannerLoading ? <Loader2 className="animate-spin w-4 h-4" /> : "Estimate"}
-                </button>
+          {/* AI Tools Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+            {/* Existing: Aftercare Architect */}
+            <div className="bg-white rounded-3xl p-8 shadow-lg border border-pink-100 flex flex-col">
+              <div className="bg-pink-100 w-12 h-12 rounded-xl flex items-center justify-center text-pink-600 mb-4">
+                <ShieldCheck size={24} />
               </div>
-              {plannerResponse && (
-                <div className="bg-purple-50 p-4 rounded-lg text-sm text-gray-700 whitespace-pre-line border border-purple-100 animate-fade-in">
-                  {plannerResponse}
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {Object.entries(servicesData).map(([category, items]) => (
-            <div key={category} className="bg-white/80 backdrop-blur-md rounded-3xl p-8 shadow-xl border border-white hover:shadow-2xl hover:bg-white transition-all duration-300 group">
-              <h3 className="text-2xl font-serif text-gray-800 mb-6 flex items-center">
-                <span className="bg-pink-100 text-pink-600 p-2 rounded-lg mr-3 shadow-sm group-hover:bg-pink-600 group-hover:text-white transition-colors">
-                    {category.includes('Nails') && <Sparkles size={20} />}
-                    {category.includes('Face') && <Droplets size={20} />}
-                    {category.includes('Braids') && <Scissors size={20} />}
-                    {category.includes('Locs') && <Feather size={20} />}
-                    {category.includes('Weddings') && <Crown size={20} />}
-                </span>
-                {category}
-              </h3>
-              <div className="space-y-4">
-                {items.map((service, idx) => (
-                  <div key={idx} className="flex justify-between items-center group/item p-3 rounded-xl hover:bg-pink-50 transition-colors">
-                    <div className="flex-1">
-                      <h4 className="font-bold text-gray-700 group-hover/item:text-pink-600 transition-colors">{service.name}</h4>
-                      <div className="flex items-center text-xs text-gray-400 mt-1 font-medium uppercase tracking-wide">
-                        <Clock size={10} className="mr-1" /> {service.duration}
-                      </div>
-                    </div>
-                    <span className="font-bold text-pink-600 bg-white px-4 py-1.5 rounded-full text-sm shadow-sm border border-pink-100">{service.price}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-
-  const ProductsPage = () => (
-    <div className="py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-4xl font-serif text-center text-gray-900 mb-4">Beauty & Cosmetics</h2>
-        <p className="text-center text-gray-500 mb-12">Curated products for your daily glow.</p>
-        
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
-          {/* Glassmorphism AI Matcher - Spans 2 cols */}
-          <div className="lg:col-span-2 relative overflow-hidden rounded-3xl p-8 shadow-lg border border-pink-100">
-            <div className="absolute inset-0 bg-gradient-to-r from-pink-50 to-white opacity-90"></div>
-            
-            <div className="relative z-10 flex flex-col md:flex-row gap-8 items-center">
-              <div className="flex-1">
-                <h3 className="text-2xl font-serif mb-2 flex items-center text-gray-900">
-                  <Gift className="mr-2 text-pink-500" /> AI Product Matcher
-                </h3>
-                <p className="text-gray-600 mb-4 text-sm">
-                  Tell us your skin type or hair texture (e.g., "Dry scalp with locs").
-                </p>
-                <form onSubmit={handleProductAI} className="relative">
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Aftercare Architect</h3>
+              <p className="text-gray-600 text-sm mb-4 flex-1">
+                Got fresh braids? Enter your service (e.g., "Sisterlocks Retie") to get a personalized maintenance routine.
+              </p>
+              <div className="space-y-3">
+                <div className="flex gap-2">
                   <input 
-                    type="text" 
-                    placeholder="Describe needs..." 
-                    className="w-full pl-4 pr-12 py-3 rounded-xl border border-gray-200 text-gray-900 focus:ring-2 focus:ring-pink-400 outline-none"
-                    value={productQuery}
-                    onChange={(e) => setProductQuery(e.target.value)}
+                    type="text"
+                    value={careQuery}
+                    onChange={(e) => setCareQuery(e.target.value)}
+                    placeholder="E.g. Silk Press"
+                    className="flex-1 bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 outline-none text-sm"
                   />
                   <button 
-                    type="submit"
-                    disabled={isProductLoading || !productQuery.trim()}
-                    className="absolute right-2 top-2 p-1.5 bg-pink-500 text-white rounded-lg hover:bg-pink-600 disabled:opacity-50"
+                    onClick={handleCareAI}
+                    disabled={isCareLoading || !careQuery.trim()}
+                    className="bg-gray-900 text-white px-4 rounded-lg font-bold text-sm hover:bg-black"
                   >
-                    {isProductLoading ? <Loader2 className="animate-spin" size={18}/> : <Wand2 size={18}/>}
+                    {isCareLoading ? <Loader2 className="animate-spin w-4 h-4" /> : "Plan"}
                   </button>
-                </form>
-                {productResponse && (
-                  <div className="mt-4 bg-white p-4 rounded-xl border border-pink-100 text-sm text-gray-700 italic animate-fade-in shadow-sm">
-                    "{productResponse}"
+                </div>
+                {careResponse && (
+                  <div className="bg-gray-50 p-4 rounded-lg text-sm text-gray-700 whitespace-pre-line border border-gray-200 animate-fade-in">
+                    <Sparkles className="w-3 h-3 text-pink-500 inline mr-1"/> {careResponse}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* NEW: Smart Braid Planner */}
+            <div className="bg-white rounded-3xl p-8 shadow-lg border border-pink-100 flex flex-col">
+              <div className="bg-purple-100 w-12 h-12 rounded-xl flex items-center justify-center text-purple-600 mb-4">
+                <Clock size={24} />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">Smart Braid Planner</h3>
+              <p className="text-gray-600 text-sm mb-4 flex-1">
+                Planning a long sitting? Enter your hair length/style (e.g., "Waist length boho knotless, 4C hair") for estimates.
+              </p>
+              <div className="space-y-3">
+                <div className="flex gap-2">
+                  <input 
+                    type="text"
+                    value={plannerQuery}
+                    onChange={(e) => setPlannerQuery(e.target.value)}
+                    placeholder="Style & Hair Details"
+                    className="flex-1 bg-gray-50 border border-gray-200 rounded-lg px-4 py-2 outline-none text-sm"
+                  />
+                  <button 
+                    onClick={handlePlannerAI}
+                    disabled={isPlannerLoading || !plannerQuery.trim()}
+                    className="bg-purple-600 text-white px-4 rounded-lg font-bold text-sm hover:bg-purple-700"
+                  >
+                    {isPlannerLoading ? <Loader2 className="animate-spin w-4 h-4" /> : "Estimate"}
+                  </button>
+                </div>
+                {plannerResponse && (
+                  <div className="bg-purple-50 p-4 rounded-lg text-sm text-gray-700 whitespace-pre-line border border-purple-100 animate-fade-in">
+                    {plannerResponse}
                   </div>
                 )}
               </div>
             </div>
           </div>
-
-          {/* NEW: Gift Note Composer */}
-          <div className="lg:col-span-1 bg-pink-600 text-white rounded-3xl p-8 shadow-lg flex flex-col justify-center relative overflow-hidden">
-             <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-10 -mt-10 blur-2xl"></div>
-             <h3 className="text-xl font-bold mb-2 flex items-center relative z-10">
-               <PenTool className="mr-2" size={20}/> Gift Note Writer
-             </h3>
-             <p className="text-pink-100 text-xs mb-4 relative z-10">Sending a gift? Let AI write the card.</p>
-             <div className="space-y-3 relative z-10">
-                <input 
-                  type="text"
-                  value={giftQuery}
-                  onChange={(e) => setGiftQuery(e.target.value)}
-                  placeholder="Who is it for?"
-                  className="w-full bg-white/20 border border-white/30 rounded-lg px-3 py-2 text-white placeholder-pink-200 text-sm focus:outline-none focus:bg-white/30"
-                />
-                <button 
-                  onClick={handleGiftAI}
-                  disabled={isGiftLoading || !giftQuery.trim()}
-                  className="w-full bg-white text-pink-600 font-bold py-2 rounded-lg text-sm hover:bg-pink-50 transition-colors"
-                >
-                  {isGiftLoading ? <Loader2 className="animate-spin mx-auto w-4 h-4"/> : "Write Note"}
-                </button>
-             </div>
-             {giftResponse && (
-               <div className="mt-4 bg-white/10 p-3 rounded-lg text-xs text-white italic border border-white/20 animate-fade-in relative z-10">
-                 "{giftResponse}"
-               </div>
-             )}
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {Object.entries(filteredServices).length > 0 ? (
+              Object.entries(filteredServices).map(([category, items]) => (
+                <div key={category} className="bg-white/80 backdrop-blur-md rounded-3xl p-8 shadow-xl border border-white hover:shadow-2xl hover:bg-white transition-all duration-300 group">
+                  <h3 className="text-2xl font-serif text-gray-800 mb-6 flex items-center">
+                    <span className="bg-pink-100 text-pink-600 p-2 rounded-lg mr-3 shadow-sm group-hover:bg-pink-600 group-hover:text-white transition-colors">
+                        {category.includes('Nails') && <Sparkles size={20} />}
+                        {category.includes('Face') && <Droplets size={20} />}
+                        {category.includes('Braids') && <Scissors size={20} />}
+                        {category.includes('Locs') && <Feather size={20} />}
+                        {category.includes('Weddings') && <Crown size={20} />}
+                    </span>
+                    {category}
+                  </h3>
+                  <div className="space-y-4">
+                    {items.map((service, idx) => (
+                      <div key={idx} className="flex justify-between items-center group/item p-3 rounded-xl hover:bg-pink-50 transition-colors">
+                        <div className="flex-1">
+                          <h4 className="font-bold text-gray-700 group-hover/item:text-pink-600 transition-colors">{service.name}</h4>
+                          <div className="flex items-center text-xs text-gray-400 mt-1 font-medium uppercase tracking-wide">
+                            <Clock size={10} className="mr-1" /> {service.duration}
+                          </div>
+                        </div>
+                        <span className="font-bold text-pink-600 bg-white px-4 py-1.5 rounded-full text-sm shadow-sm border border-pink-100">{service.price}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="md:col-span-2 text-center py-16 px-8 bg-white/50 rounded-3xl border-2 border-dashed border-pink-200">
+                <h3 className="text-2xl font-serif text-gray-700">No Services Found</h3>
+                <p className="text-gray-500 mt-2">Try a different search term or clear the search to see all services.</p>
+              </div>
+            )}
           </div>
         </div>
+      </div>
+    );
+  };
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-          {products.map((product, idx) => (
-            <div key={idx} className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100 group hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
-              <div className="relative h-80 overflow-hidden">
-                <img src={product.img} alt={product.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <button className="absolute bottom-6 left-1/2 transform -translate-x-1/2 bg-white/90 backdrop-blur text-pink-600 px-6 py-2 rounded-full font-bold shadow-lg translate-y-20 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                  View Details
-                </button>
-              </div>
-              <div className="p-6">
-                <h3 className="text-lg font-bold text-gray-900 mb-1">{product.name}</h3>
-                <div className="flex justify-between items-center mt-4">
-                  <span className="text-2xl font-serif text-pink-500">{product.price}</span>
-                  <ShoppingBag size={20} className="text-gray-400 hover:text-pink-500 cursor-pointer transition-colors"/>
+
+  const ProductsPage = () => {
+    const filteredProducts = products.filter(product =>
+      product.name.toLowerCase().includes(productSearchQuery.toLowerCase())
+    );
+
+    return (
+      <div className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-4xl font-serif text-center text-gray-900 mb-4">Beauty & Cosmetics</h2>
+          <p className="text-center text-gray-500 mb-8">Curated products for your daily glow.</p>
+
+          <div className="relative w-full max-w-lg mx-auto mb-12">
+            <input
+              type="text"
+              placeholder="Search for products like 'Lipstick'..."
+              className="w-full px-6 py-4 pr-12 text-gray-700 bg-white border-2 border-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-pink-300 focus:border-transparent shadow-sm transition"
+              value={productSearchQuery}
+              onChange={(e) => setProductSearchQuery(e.target.value)}
+            />
+            <Search className="absolute w-6 h-6 text-gray-400 right-5 top-1/2 transform -translate-y-1/2" />
+          </div>
+          
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+            {/* Glassmorphism AI Matcher - Spans 2 cols */}
+            <div className="lg:col-span-2 relative overflow-hidden rounded-3xl p-8 shadow-lg border border-pink-100">
+              <div className="absolute inset-0 bg-gradient-to-r from-pink-50 to-white opacity-90"></div>
+              
+              <div className="relative z-10 flex flex-col md:flex-row gap-8 items-center">
+                <div className="flex-1">
+                  <h3 className="text-2xl font-serif mb-2 flex items-center text-gray-900">
+                    <Gift className="mr-2 text-pink-500" /> AI Product Matcher
+                  </h3>
+                  <p className="text-gray-600 mb-4 text-sm">
+                    Tell us your skin type or hair texture (e.g., "Dry scalp with locs").
+                  </p>
+                  <form onSubmit={handleProductAI} className="relative">
+                    <input 
+                      type="text" 
+                      placeholder="Describe needs..." 
+                      className="w-full pl-4 pr-12 py-3 rounded-xl border border-gray-200 text-gray-900 focus:ring-2 focus:ring-pink-400 outline-none"
+                      value={productQuery}
+                      onChange={(e) => setProductQuery(e.target.value)}
+                    />
+                    <button 
+                      type="submit"
+                      disabled={isProductLoading || !productQuery.trim()}
+                      className="absolute right-2 top-2 p-1.5 bg-pink-500 text-white rounded-lg hover:bg-pink-600 disabled:opacity-50"
+                    >
+                      {isProductLoading ? <Loader2 className="animate-spin" size={18}/> : <Wand2 size={18}/>}
+                    </button>
+                  </form>
+                  {productResponse && (
+                    <div className="mt-4 bg-white p-4 rounded-xl border border-pink-100 text-sm text-gray-700 italic animate-fade-in shadow-sm">
+                      "{productResponse}"
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
-          ))}
+
+            {/* NEW: Gift Note Composer */}
+            <div className="lg:col-span-1 bg-pink-600 text-white rounded-3xl p-8 shadow-lg flex flex-col justify-center relative overflow-hidden">
+               <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-10 -mt-10 blur-2xl"></div>
+               <h3 className="text-xl font-bold mb-2 flex items-center relative z-10">
+                 <PenTool className="mr-2" size={20}/> Gift Note Writer
+               </h3>
+               <p className="text-pink-100 text-xs mb-4 relative z-10">Sending a gift? Let AI write the card.</p>
+               <div className="space-y-3 relative z-10">
+                  <input 
+                    type="text"
+                    value={giftQuery}
+                    onChange={(e) => setGiftQuery(e.target.value)}
+                    placeholder="Who is it for?"
+                    className="w-full bg-white/20 border border-white/30 rounded-lg px-3 py-2 text-white placeholder-pink-200 text-sm focus:outline-none focus:bg-white/30"
+                  />
+                  <button 
+                    onClick={handleGiftAI}
+                    disabled={isGiftLoading || !giftQuery.trim()}
+                    className="w-full bg-white text-pink-600 font-bold py-2 rounded-lg text-sm hover:bg-pink-50 transition-colors"
+                  >
+                    {isGiftLoading ? <Loader2 className="animate-spin mx-auto w-4 h-4"/> : "Write Note"}
+                  </button>
+               </div>
+               {giftResponse && (
+                 <div className="mt-4 bg-white/10 p-3 rounded-lg text-xs text-white italic border border-white/20 animate-fade-in relative z-10">
+                   "{giftResponse}"
+                 </div>
+               )}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+            {filteredProducts.length > 0 ? (
+              filteredProducts.map((product, idx) => (
+                <div key={idx} className="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100 group hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+                  <div className="relative h-80 overflow-hidden">
+                    <img src={product.img} alt={product.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <button 
+                      onClick={() => {
+                        setSelectedProduct(product);
+                        navigate('productdetail');
+                      }}
+                      className="absolute bottom-6 left-1/2 transform -translate-x-1/2 bg-white/90 backdrop-blur text-pink-600 px-6 py-2 rounded-full font-bold shadow-lg translate-y-20 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500"
+                    >
+                      View Details
+                    </button>
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-lg font-bold text-gray-900 mb-1">{product.name}</h3>
+                    <div className="flex justify-between items-center mt-4">
+                      <span className="text-2xl font-serif text-pink-500">{product.price}</span>
+                      <button onClick={() => addToCart(product)}>
+                        <ShoppingBag size={20} className="text-gray-400 hover:text-pink-500 cursor-pointer transition-colors"/>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="md:col-span-3 text-center py-16 px-8 bg-white/50 rounded-3xl border-2 border-dashed border-pink-200">
+                <h3 className="text-2xl font-serif text-gray-700">No Products Found</h3>
+                <p className="text-gray-500 mt-2">Try a different search term or clear the search to see all products.</p>
+              </div>
+            )}
+          </div>
         </div>
+      </div>
+    );
+  };
+
+  const ProductDetailPage = () => (
+    <div className="py-32 bg-white min-h-screen">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <button onClick={() => navigate('products')} className="mb-8 flex items-center text-gray-500 hover:text-pink-600 font-bold transition-colors">
+          <ChevronLeft size={20} className="mr-2"/>
+          Back to Products
+        </button>
+        {selectedProduct && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+            <div className="bg-gray-50 rounded-3xl shadow-lg overflow-hidden border">
+              <img src={selectedProduct.img} alt={selectedProduct.name} className="w-full h-full object-cover aspect-square"/>
+            </div>
+            <div className="py-4">
+              <h2 className="text-4xl md:text-5xl font-serif text-gray-900 mb-4">{selectedProduct.name}</h2>
+              <p className="text-3xl font-serif text-pink-500 mb-6">{selectedProduct.price}</p>
+              <p className="text-gray-600 mb-8 leading-relaxed font-light text-lg">{selectedProduct.description}</p>
+              <button
+                onClick={() => addToCart(selectedProduct)}
+                className="w-full px-8 py-4 bg-pink-600 text-white rounded-xl font-bold shadow-lg shadow-pink-300/50 hover:bg-pink-700 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-3"
+              >
+                <ShoppingCart size={20} />
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
+
+  const CartPage = () => {
+    const totalPrice = cartItems.reduce((total, item) => {
+      const price = parseFloat(item.price.replace('Ksh ', ''));
+      return total + price * item.quantity;
+    }, 0);
+
+    const handleQuantityChange = (product, amount) => {
+        setCartItems(prevItems => {
+            const updatedItems = prevItems.map(item => {
+                if (item.name === product.name) {
+                    const newQuantity = item.quantity + amount;
+                    return newQuantity > 0 ? { ...item, quantity: newQuantity } : null;
+                }
+                return item;
+            });
+            return updatedItems.filter(Boolean); // remove nulls from cart
+        });
+    };
+    
+    const handleCheckout = () => {
+        alert('Thank you for your purchase! Your order has been confirmed.');
+        setCartItems([]);
+        navigate('home');
+    }
+
+    const handleRemoveItem = (product) => {
+        setCartItems(prevItems => prevItems.filter(item => item.name !== product.name));
+    };
+
+    return (
+    <div className="py-32 bg-pink-50/30 min-h-screen">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 className="text-4xl font-serif text-center text-gray-900 mb-12">Your Shopping Cart</h2>
+            {cartItems.length === 0 ? (
+                <div className="text-center py-16 px-8 bg-white rounded-3xl shadow-md border">
+                    <ShoppingCart size={48} className="mx-auto text-gray-300 mb-6"/>
+                    <p className="text-gray-500 text-xl font-medium mb-6">Your cart is empty.</p>
+                    <button onClick={() => navigate('products')} className="mt-6 px-8 py-3 bg-pink-600 text-white rounded-xl font-bold hover:bg-pink-700 transition-all shadow-lg shadow-pink-200">
+                        Shop Our Products
+                    </button>
+                </div>
+            ) : (
+                <div className="bg-white p-8 rounded-3xl shadow-xl border">
+                    <div className="space-y-6">
+                        {cartItems.map(item => (
+                            <div key={item.name} className="flex items-center justify-between p-4 bg-white rounded-2xl border-b border-gray-100">
+                                <div className="flex items-center gap-6">
+                                    <img src={item.img} alt={item.name} className="w-24 h-24 object-cover rounded-xl"/>
+                                    <div>
+                                        <h3 className="font-bold text-lg text-gray-800">{item.name}</h3>
+                                        <p className="text-gray-500 font-bold">{item.price}</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-6">
+                                    <div className="flex items-center gap-4 border border-gray-200 rounded-full px-4 py-2">
+                                        <button onClick={() => handleQuantityChange(item, -1)} className="text-gray-500 hover:text-pink-600 font-bold text-lg">-</button>
+                                        <span className="font-bold text-lg">{item.quantity}</span>
+                                        <button onClick={() => handleQuantityChange(item, 1)} className="text-gray-500 hover:text-pink-600 font-bold text-lg">+</button>
+                                    </div>
+                                    <p className="font-bold text-xl w-32 text-right">
+                                        Ksh {(parseFloat(item.price.replace('Ksh ', '')) * item.quantity).toFixed(2)}
+                                    </p>
+                                    <button onClick={() => handleRemoveItem(item)} className="text-gray-400 hover:text-red-500 p-2 rounded-full hover:bg-red-50 transition-colors">
+                                        <X size={20}/>
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="mt-12 pt-8 border-t-2 border-dashed border-gray-200 text-right">
+                        <p className="text-3xl font-bold">Total: <span className="text-pink-600">Ksh {totalPrice.toFixed(2)}</span></p>
+                        <button 
+                            onClick={handleCheckout}
+                            className="mt-6 px-10 py-4 bg-gray-900 text-white rounded-xl font-bold text-lg hover:bg-black transition-all shadow-lg"
+                        >
+                            Proceed to Checkout
+                        </button>
+                    </div>
+                </div>
+            )}
+        </div>
+    </div>
+    );
+};
 
   const WeddingPage = () => (
     <div className="py-24 bg-pink-50 relative">
@@ -930,6 +1276,7 @@ export default function App() {
             <div className="bg-white/20 backdrop-blur p-4 rounded-xl">
                 <p className="text-sm font-bold">Opening Hours</p>
                 <p className="text-xs mt-1 opacity-90">Mon-Sat: 9am - 7pm</p>
+                <p className="text-xs opacity-90">Sun: Afternoon Hours</p>
             </div>
           </div>
           
@@ -959,7 +1306,7 @@ export default function App() {
                     className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none transition-all bg-gray-50 focus:bg-white"
                     value={bookingData.name}
                     onChange={(e) => setBookingData({...bookingData, name: e.target.value})}
-                    placeholder="Jane Doe"
+                    placeholder="Enter your full name"
                   />
                 </div>
                 <div>
@@ -970,7 +1317,7 @@ export default function App() {
                     className="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-500 focus:border-pink-500 outline-none transition-all bg-gray-50 focus:bg-white"
                     value={bookingData.email}
                     onChange={(e) => setBookingData({...bookingData, email: e.target.value})}
-                    placeholder="jane@example.com"
+                    placeholder="Enter your email address"
                   />
                 </div>
               </div>
@@ -1013,7 +1360,7 @@ export default function App() {
                   value={bookingData.service}
                   onChange={(e) => setBookingData({...bookingData, service: e.target.value})}
                 >
-                  <option value="">Choose a treatment...</option>
+                  <option value="" italics="true">Choose a treatment...</option>
                   <optgroup label="Braids & Cornrows">
                     {servicesData["Braids & Cornrows"].map(s => <option key={s.name} value={s.name}>{s.name} ({s.price})</option>)}
                   </optgroup>
@@ -1197,6 +1544,8 @@ export default function App() {
         )}
         {currentPage === 'services' && <ServicesPage />}
         {currentPage === 'products' && <ProductsPage />}
+        {currentPage === 'productdetail' && <ProductDetailPage />}
+        {currentPage === 'cart' && <CartPage />}
         {currentPage === 'weddings' && <WeddingPage />}
         {currentPage === 'booking' && <BookingPage />}
         {currentPage === 'contact' && <ContactPage />}
