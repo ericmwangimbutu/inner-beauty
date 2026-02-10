@@ -21,8 +21,8 @@ const Header = ({ cartItems, isMenuOpen, setIsMenuOpen }) => {
                                 key={item}
                                 to={item.toLowerCase() === 'home' ? '/' : `/${item.toLowerCase()}`}
                                 className={`text-sm uppercase tracking-wider font-medium transition-all duration-200 relative group ${location.pathname === (item.toLowerCase() === 'home' ? '/' : `/${item.toLowerCase()}`)
-                                        ? 'text-pink-600'
-                                        : 'text-gray-600 hover:text-pink-500'
+                                    ? 'text-pink-600'
+                                    : 'text-gray-600 hover:text-pink-500'
                                     }`}
                             >
                                 {item}
