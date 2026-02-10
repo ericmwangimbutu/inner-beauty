@@ -79,12 +79,7 @@ export default {
       boxShadow: {
         glow: '0 15px 80px rgba(242, 81, 120, 0.35)',
       },
-      backgroundImage: {
-        'hero-gradient':
-          'radial-gradient(circle at top, rgba(255,255,255,0.18), transparent 55%), linear-gradient(120deg, #0d0d17, #171724 40%, #242436)',
-        'card-gradient':
-          'linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02))',
-      },
+      backgroundImage: {},
     },
   },
   plugins: [],

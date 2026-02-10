@@ -262,27 +262,126 @@ const InstagramSection = () => (
   </section>
 );
 
-const TestimonialsSection = () => (
-  <section className="py-24 bg-white">
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 className="text-center text-4xl font-serif mb-16 text-gray-900">Client Love</h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {testimonials.map((t) => (
-          <div key={t.id} className="bg-white border border-gray-100 p-8 rounded-3xl relative shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
-            <div className="absolute -top-4 left-8 bg-gradient-to-r from-pink-500 to-rose-600 text-white p-3 rounded-xl shadow-lg">
-              <Heart size={20} fill="white" />
-            </div>
-            <div className="flex text-yellow-400 mb-6 mt-4">
-              {[...Array(t.rating)].map((_, i) => <Star key={i} size={18} fill="currentColor" className="mr-1" />)}
-            </div>
-            <p className="text-gray-600 italic mb-8 text-lg leading-relaxed">"{t.text}"</p>
-            <h4 className="font-bold text-gray-900 border-l-4 border-pink-500 pl-4">{t.name}</h4>
-          </div>
-        ))}
+const TestimonialsSection = () => {
+  const [currentTestimonial, setCurrentTestimonial] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
+    }, 5000); // Change every 5 seconds
+    return () => clearInterval(timer);
+  }, []);
+
+  const nextTestimonial = () => {
+    setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
+  };
+
+  const prevTestimonial = () => {
+    setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  };
+
+  return (
+    <section className="py-24 bg-gradient-to-b from-white to-pink-50 relative overflow-hidden">
+      {/* Background Decoration */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div className="absolute top-20 right-10 w-64 h-64 bg-pink-200 rounded-full blur-[100px] opacity-30"></div>
+        <div className="absolute bottom-20 left-10 w-64 h-64 bg-rose-200 rounded-full blur-[100px] opacity-30"></div>
       </div>
-    </div>
-  </section>
-);
+
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-serif text-gray-900 mt-2">Client Love</h2>
+          <p className="text-gray-600 mt-4 max-w-2xl mx-auto">
+            Hear what our amazing clients have to say about their Inner Beauty experience
+          </p>
+        </div>
+
+        {/* Carousel Container */}
+        <div className="relative">
+          {/* Main Testimonial Card */}
+          <div className="relative min-h-[400px] flex items-center justify-center">
+            {testimonials.map((t, index) => (
+              <div
+                key={t.id}
+                className={`absolute inset-0 transition-all duration-700 ease-in-out ${index === currentTestimonial
+                  ? 'opacity-100 translate-x-0 scale-100'
+                  : index < currentTestimonial
+                    ? 'opacity-0 -translate-x-full scale-95'
+                    : 'opacity-0 translate-x-full scale-95'
+                  }`}
+              >
+                <div className="bg-white border border-pink-100 p-12 md:p-16 rounded-3xl shadow-2xl hover:shadow-3xl transition-shadow">
+                  {/* Quote Icon */}
+                  <div className="flex justify-center mb-8">
+                    <div className="bg-gradient-to-r from-pink-500 to-rose-600 text-white p-4 rounded-2xl shadow-lg">
+                      <Heart size={32} fill="white" />
+                    </div>
+                  </div>
+
+                  {/* Stars */}
+                  <div className="flex justify-center text-yellow-400 mb-8">
+                    {[...Array(t.rating)].map((_, i) => (
+                      <Star key={i} size={24} fill="currentColor" className="mx-1" />
+                    ))}
+                  </div>
+
+                  {/* Testimonial Text */}
+                  <p className="text-gray-700 text-xl md:text-2xl italic text-center leading-relaxed mb-10 font-light">
+                    "{t.text}"
+                  </p>
+
+                  {/* Author */}
+                  <div className="text-center">
+                    <h4 className="font-bold text-gray-900 text-lg">{t.name}</h4>
+                    <div className="w-16 h-1 bg-gradient-to-r from-pink-500 to-rose-600 mx-auto mt-3 rounded-full"></div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Navigation Arrows */}
+          <button
+            onClick={prevTestimonial}
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 bg-white hover:bg-pink-50 text-gray-700 hover:text-pink-600 p-3 md:p-4 rounded-full shadow-lg hover:shadow-xl transition-all border border-pink-100 group"
+            aria-label="Previous testimonial"
+          >
+            <ChevronLeft size={24} className="group-hover:-translate-x-1 transition-transform" />
+          </button>
+          <button
+            onClick={nextTestimonial}
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 bg-white hover:bg-pink-50 text-gray-700 hover:text-pink-600 p-3 md:p-4 rounded-full shadow-lg hover:shadow-xl transition-all border border-pink-100 group"
+            aria-label="Next testimonial"
+          >
+            <ChevronRight size={24} className="group-hover:translate-x-1 transition-transform" />
+          </button>
+        </div>
+
+        {/* Carousel Indicators */}
+        <div className="flex justify-center gap-3 mt-12">
+          {testimonials.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => setCurrentTestimonial(idx)}
+              className={`transition-all rounded-full ${idx === currentTestimonial
+                ? 'bg-gradient-to-r from-pink-500 to-rose-600 w-12 h-3'
+                : 'bg-pink-200 hover:bg-pink-300 w-3 h-3'
+                }`}
+              aria-label={`Go to testimonial ${idx + 1}`}
+            />
+          ))}
+        </div>
+
+        {/* Counter */}
+        <div className="text-center mt-8">
+          <p className="text-gray-500 text-sm font-medium">
+            {currentTestimonial + 1} / {testimonials.length}
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+};
 
 const HomePage = ({ navigate, setIsAIModalOpen, handleStyleAI, styleQuery, setStyleQuery, isStyleLoading, styleResponse }) => {
   return (

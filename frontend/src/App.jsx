@@ -10,10 +10,11 @@ import Weddings from './pages/Weddings';
 import Booking from './pages/Booking';
 import Contact from './pages/Contact';
 import MainLayout from './layouts/MainLayout';
+import Chatbot from './components/Chatbot';
 
 // Backend API endpoint (also used for Gemini proxying)
 const apiBase =
-  import.meta.env.VITE_API_BASE_URL || 'http://localhost/backend/api/index.php';
+  import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api';
 const defaultModel =
   import.meta.env.VITE_GEMINI_MODEL || 'gemini-2.5-flash-preview-09-2025';
 
@@ -21,7 +22,7 @@ import { usePortfolioData } from './hooks/usePortfolioData';
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  
+
   // --- Data Fetching ---
   const { services: flatServices, products, status } = usePortfolioData();
   const [categorizedServices, setCategorizedServices] = useState({});
@@ -75,6 +76,9 @@ function App() {
   const [giftQuery, setGiftQuery] = useState('');
   const [giftResponse, setGiftResponse] = useState('');
   const [isGiftLoading, setIsGiftLoading] = useState(false);
+  const [isAIModalOpen, setIsAIModalOpen] = useState(false);
+
+
 
   const [serviceSearchQuery, setServiceSearchQuery] = useState('');
   const [productSearchQuery, setProductSearchQuery] = useState('');
@@ -114,7 +118,7 @@ function App() {
   // --- AI Handlers ---
   const callGemini = async (prompt, model = defaultModel) => {
     try {
-      const response = await fetch(`${apiBase}?resource=ai`, {
+      const response = await fetch(`${apiBase}/ai`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt, model }),
@@ -276,20 +280,23 @@ function App() {
   if (status === 'loading') {
     return <div className="flex items-center justify-center min-h-screen bg-pink-50"><div>Loading...</div></div>;
   }
-  
+
   return (
-    <Routes>
-      <Route path="/" element={<MainLayout cartItems={cartItems} navigate={navigate} isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} callGemini={callGemini} servicesData={categorizedServices} products={products} />}>
-        <Route index element={<Home navigate={navigate} handleStyleAI={handleStyleAI} styleQuery={styleQuery} setStyleQuery={setStyleQuery} isStyleLoading={isStyleLoading} styleResponse={styleResponse} />} />
-        <Route path="services" element={<Services servicesData={categorizedServices} serviceSearchQuery={serviceSearchQuery} setServiceSearchQuery={setServiceSearchQuery} careQuery={careQuery} setCareQuery={setCareQuery} handleCareAI={handleCareAI} isCareLoading={isCareLoading} careResponse={careResponse} plannerQuery={plannerQuery} setPlannerQuery={setPlannerQuery} handlePlannerAI={handlePlannerAI} isPlannerLoading={isPlannerLoading} plannerResponse={plannerResponse} />} />
-        <Route path="products" element={<Products products={products} productSearchQuery={productSearchQuery} setProductSearchQuery={setProductSearchQuery} navigate={navigate} addToCart={addToCart} productQuery={productQuery} setProductQuery={setProductQuery} handleProductAI={handleProductAI} isProductLoading={isProductLoading} productResponse={productResponse} giftQuery={giftQuery} setGiftQuery={setGiftQuery} handleGiftAI={handleGiftAI} isGiftLoading={isGiftLoading} giftResponse={giftResponse} setSelectedProduct={setSelectedProduct} />} />
-        <Route path="productdetail" element={<ProductDetail selectedProduct={selectedProduct} addToCart={addToCart} />} />
-        <Route path="cart" element={<Cart cartItems={cartItems} setCartItems={setCartItems} navigate={navigate} />} />
-        <Route path="weddings" element={<Weddings bridalQuery={bridalQuery} setBridalQuery={setBridalQuery} handleBridalAI={handleBridalAI} isBridalLoading={isBridalLoading} bridalResponse={bridalResponse} />} />
-        <Route path="booking" element={<Booking servicesData={categorizedServices} bookingData={bookingData} setBookingData={setBookingData} handleBookingSubmit={handleBookingSubmit} showConfirmation={showConfirmation} />} />
-        <Route path="contact" element={<Contact />} />
-      </Route>
-    </Routes>
+    <>
+      <Routes>
+        <Route path="/" element={<MainLayout cartItems={cartItems} navigate={navigate} isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} callGemini={callGemini} servicesData={categorizedServices} products={products} />}>
+          <Route index element={<Home navigate={navigate} handleStyleAI={handleStyleAI} styleQuery={styleQuery} setStyleQuery={setStyleQuery} isStyleLoading={isStyleLoading} styleResponse={styleResponse} />} />
+          <Route path="services" element={<Services servicesData={categorizedServices} serviceSearchQuery={serviceSearchQuery} setServiceSearchQuery={setServiceSearchQuery} careQuery={careQuery} setCareQuery={setCareQuery} handleCareAI={handleCareAI} isCareLoading={isCareLoading} careResponse={careResponse} plannerQuery={plannerQuery} setPlannerQuery={setPlannerQuery} handlePlannerAI={handlePlannerAI} isPlannerLoading={isPlannerLoading} plannerResponse={plannerResponse} />} />
+          <Route path="products" element={<Products products={products} productSearchQuery={productSearchQuery} setProductSearchQuery={setProductSearchQuery} navigate={navigate} addToCart={addToCart} productQuery={productQuery} setProductQuery={setProductQuery} handleProductAI={handleProductAI} isProductLoading={isProductLoading} productResponse={productResponse} giftQuery={giftQuery} setGiftQuery={setGiftQuery} handleGiftAI={handleGiftAI} isGiftLoading={isGiftLoading} giftResponse={giftResponse} setSelectedProduct={setSelectedProduct} />} />
+          <Route path="productdetail" element={<ProductDetail selectedProduct={selectedProduct} addToCart={addToCart} />} />
+          <Route path="cart" element={<Cart cartItems={cartItems} setCartItems={setCartItems} navigate={navigate} />} />
+          <Route path="weddings" element={<Weddings bridalQuery={bridalQuery} setBridalQuery={setBridalQuery} handleBridalAI={handleBridalAI} isBridalLoading={isBridalLoading} bridalResponse={bridalResponse} />} />
+          <Route path="booking" element={<Booking servicesData={categorizedServices} bookingData={bookingData} setBookingData={setBookingData} handleBookingSubmit={handleBookingSubmit} showConfirmation={showConfirmation} setIsAIModalOpen={setIsAIModalOpen} />} />
+          <Route path="contact" element={<Contact />} />
+        </Route>
+      </Routes>
+
+    </>
   );
 }
 

@@ -21,7 +21,7 @@ const WeddingPage = ({ bridalQuery, setBridalQuery, handleBridalAI, isBridalLoad
         
         {/* Glassmorphism AI Bridal Generator */}
         <div className="max-w-4xl mx-auto bg-white/80 backdrop-blur-xl rounded-3xl p-10 shadow-2xl border border-white/60 mb-20 text-left relative overflow-hidden">
-           <div className="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-pink-400 to-rose-600"></div>
+           <div className="absolute top-0 left-0 w-2 h-full bg-pink-500"></div>
            <div className="flex items-start gap-6 flex-col md:flex-row">
                <div className="flex-1">
                    <h3 className="text-3xl font-serif text-gray-900 mb-3 flex items-center">

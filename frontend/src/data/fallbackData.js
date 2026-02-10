@@ -6,7 +6,7 @@ export const services = [
       'Cuticle therapy, precision shaping, and nourishing oils finished with gel brilliance.',
     duration: '45 min',
     price: '$45',
-    category: 'nails',
+    category: 'Nails & Care',
     tags: ['gel application', 'nail polish', 'cuticle care'],
   },
   {
@@ -16,7 +16,7 @@ export const services = [
       'Mineral soak, bamboo scrub, and reflexology massage that revives tired feet.',
     duration: '60 min',
     price: '$60',
-    category: 'nails',
+    category: 'Nails & Care',
     tags: ['scrubbing', 'hydration'],
   },
   {
@@ -26,7 +26,7 @@ export const services = [
       'Double cleanse, enzyme resurfacing, lymphatic sculpting, and LED calm therapy.',
     duration: '75 min',
     price: '$120',
-    category: 'skin',
+    category: 'Face & Body',
     tags: ['full facial', 'radiance', 'wedding ready'],
   },
   {
@@ -36,7 +36,7 @@ export const services = [
       'Velvety sugar crystals and shea hydration to unveil satin-touch skin.',
     duration: '50 min',
     price: '$85',
-    category: 'skin',
+    category: 'Face & Body',
     tags: ['body polish', 'aromatherapy'],
   },
   {
@@ -46,7 +46,7 @@ export const services = [
       'Custom patterns including knotless, Ghanaian, and classic cornrows with tension care.',
     duration: '2-4 hrs',
     price: 'From $180',
-    category: 'hair',
+    category: 'Braids & Cornrows',
     tags: ['braids', 'knotless', 'ghanian', 'conrows'],
   },
   {
@@ -56,7 +56,7 @@ export const services = [
       'Rejuvenation, tightening, or graceful retirement with strengthening cocktails.',
     duration: '3 hrs',
     price: 'From $220',
-    category: 'hair',
+    category: 'Locs & Natural',
     tags: ['sisterlocks', 'restoration', 'retire'],
   },
   {
@@ -66,7 +66,7 @@ export const services = [
       'Gentle detangling, steam therapy, and protective styling transition.',
     duration: '4 hrs',
     price: 'From $240',
-    category: 'hair',
+    category: 'Locs & Natural',
     tags: ['dreadlocks', 'retire', 'protective'],
   },
   {
@@ -76,7 +76,7 @@ export const services = [
       'Moisture mapping, coil definition, and frizz seal for editorial finishes.',
     duration: '90 min',
     price: '$95',
-    category: 'hair',
+    category: 'Locs & Natural',
     tags: ['twistouts', 'curl care'],
   },
   {
@@ -86,7 +86,7 @@ export const services = [
       'Builder gel structure, chrome finishes, and flawless long-wear polish.',
     duration: '50 min',
     price: '$55',
-    category: 'nails',
+    category: 'Nails & Care',
     tags: ['gel application', 'long wear'],
   },
 ]
