@@ -1,0 +1,24 @@
+{
+  "name": "inner-beauty-api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vercel dev --listen 3000",
+    "build": "tsc",
+    "vercel-build": "npm run build",
+    "start": "node .vercel_build_output/functions/node/index.js"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^0.9.0",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.3.1",
+    "jsonwebtoken": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.2",
+    "@types/node": "^20.10.0",
+    "typescript": "^5.3.3",
+    "vercel": "^28.0.0"
+  }
+}
