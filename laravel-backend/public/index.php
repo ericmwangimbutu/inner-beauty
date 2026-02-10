@@ -2,6 +2,8 @@
 
 use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+require __DIR__ . '/../public/index.php';
 
 define('LARAVEL_START', microtime(true));
 
