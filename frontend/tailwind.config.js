@@ -35,6 +35,8 @@ export default {
         'pulse-slow': 'pulse-slow 2.4s ease-in-out infinite',
       },
       colors: {
+        cream: '#FCFAF8',
+        charcoal: '#1A1A1A',
         ink: {
           50: '#f2f2f5',
           100: '#e3e3ea',
@@ -73,8 +75,9 @@ export default {
         },
       },
       fontFamily: {
+        serif: ['"Bodoni Moda"', 'serif'],
+        sans: ['"Montserrat"', 'sans-serif'],
         display: ['"Playfair Display"', 'serif'],
-        sans: ['"Plus Jakarta Sans"', 'ui-sans-serif', 'system-ui'],
       },
       boxShadow: {
         glow: '0 15px 80px rgba(242, 81, 120, 0.35)',
