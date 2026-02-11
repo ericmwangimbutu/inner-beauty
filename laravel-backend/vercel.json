@@ -2,7 +2,9 @@
     "version": 2,
     "framework": null,
     "functions": {
-        "api/index.php": { "runtime": "vercel-php@0.7.3" }
+        "api/index.php": {
+            "runtime": "vercel-php@0.7.3"
+        }
     },
     "routes": [
         {
@@ -15,5 +17,7 @@
         "APP_DEBUG": "true",
         "APP_URL": "https://${VERCEL_URL}",
         "DB_CONNECTION": "pgsql"
-    }
+    },
+    "outputDirectory": "public",
+    "buildCommand": "true"
 }
